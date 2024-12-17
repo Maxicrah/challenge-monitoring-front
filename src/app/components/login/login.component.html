@@ -1,1 +1,59 @@
-<p>login works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="part-1">
+            <div class="sign-in">
+                <p>Iniciar Sesión</p>
+                <p class="text-sign-in">
+                    Nos alegra tenerte de vuelta y estamos listos para atender tus
+                    necesidades. Inicia sesión y continúa aprovechando al máximo nuestra
+                    plataforma.
+                </p>
+                <p class="text-sign-in">
+                    <img src="/assets/login/Shape.png" alt="" />
+                    <span class="monitoreo" style="margin-left: 17px">Monitoreo integral</span>
+                    <br />
+                    <span class="administra" style="margin-left: 37px; margin-bottom: 20px">Administra, monitorea
+                        multiples plantas de forma centralizada</span>
+                </p>
+                <div style="margin-top: 30px">
+                    <p class="text-sign-in">
+                        <img src="/assets/login/star.png" alt="" />
+                        <span class="monitoreo" style="margin-left: 17px">Notificaciones en tiempo real</span>
+                        <br />
+                        <span class="administra" style="margin-left: 37px; margin-bottom: 20px">Recibí notificaciones en
+                            tiempo real sobre las mediaciones</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="part-2">
+            <div class="form-container">
+                <h1 class="title-monitoreo">Portal de monitoreo</h1>
+                <p class="iniciar-sesion">Iniciar sesión</p>
+                <form>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" style="height: 58px" id="floatingInput"
+                            placeholder="Luciano@email.com" />
+                        <label for="floatingInput">Email </label>
+                    </div>
+                    <div class="form-password">
+                        <input [type]="changeType ? 'password' : 'text'" class="form-control" style="height: 48px"
+                            id="floatingPassword" placeholder="Contraseña" />
+                        <span class="eyeicon" (click)="viewPassword()"><i
+                                [ngClass]="visible ? 'bi bi-eye' : 'bi bi-eye-slash'"></i></span>
+                    </div>
+                    <div class="text-sign-in mt-4 d-flex" style="align-items: center">
+                        <p class="txt-password">¿Olvidaste tu contraseña?</p>
+                        <button class="btn btn-primary" style="margin-bottom: 20px; margin-left: 40px">
+                            Iniciar sesion
+                        </button>
+                    </div>
+                </form>
+                <p class="text-captcha">
+                    Protegido por reCAPTCHA y sujeto a la Política de Privacidad y
+                    Condiciones.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
