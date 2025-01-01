@@ -17,8 +17,11 @@
     </nav>
     <div class="body">
         <h1 class="mt-5">Monitoreo Global</h1>
-        <div  class="cards row mt-3" style="margin: 0">
+        
 
+
+        <div  class="cards row mt-3" style="margin: 0">
+          
             <div *ngFor="let alert of alert_icons" class="card col-3 col-md-3" style="width: 290px; height: 110px">
                 <div class="card-body">
                     <h5 class="card-title">{{ alert.title }}</h5>
@@ -26,8 +29,11 @@
                     <img [src]="alert.icon" alt="icon-dashboard" class="card-icon-right" />
                 </div>
             </div>
+            
          
         </div>
+
+        
         <div class="table-responsive mt-4">
             <div class="table-header d-flex justify-content-start align-items-center p-3" 
             style="
@@ -47,7 +53,7 @@ line-height: 18px;
 text-align: left;
 text-underline-position: from-font;
 text-decoration-skip-ink: none;
-" data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Crear nueva planta</button>
+" data-bs-toggle="modal" data-bs-target="#createPlant">+ Crear nueva planta</button>
             </div>
 
             <table class="table" style="border-collapse: separate; border-spacing: 0">
@@ -62,202 +68,50 @@ text-decoration-skip-ink: none;
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <img src="assets/flags/argentina.png" alt="Argentina"
-                                style="width: 20px; margin-right: 10px" />Argentina
-                        </td>
-                        <td>Quilmes</td>
-                        <td>300</td>
-                        <td>10</td>
-                        <td>2</td>
-                        <td><button class="btn btn-outline-secondary">Editar</button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <img src="assets/flags/argentina.png" alt="Argentina"
-                                style="width: 20px; margin-right: 10px" />Argentina
-                        </td>
-                        <td>Quilmes</td>
-                        <td>300</td>
-                        <td>10</td>
-                        <td>2</td>
-                        <td><button class="btn btn-outline-secondary">Editar</button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <img src="assets/flags/argentina.png" alt="Argentina"
-                                style="width: 20px; margin-right: 10px" />Argentina
-                        </td>
-                        <td>Quilmes</td>
-                        <td>300</td>
-                        <td>10</td>
-                        <td>2</td>
-                        <td><button class="btn btn-outline-secondary">Editar</button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <img src="assets/flags/argentina.png" alt="Argentina"
-                                style="width: 20px; margin-right: 10px" />Argentina
-                        </td>
-                        <td>Quilmes</td>
-                        <td>300</td>
-                        <td>10</td>
-                        <td>2</td>
-                        <td><button class="btn btn-outline-secondary">Editar</button></td>
-                    </tr>
+                  <tr *ngFor="let plant of plants">
+                    <td>
+                      <img [src]="getFlagUrl(plant.country)" alt="{{ plant.country }}" style="width: 20px; margin-right: 10px">{{ plant.country }}
+                    </td>
+                    <td>{{ plant.name }}</td>
+                    <td>{{ countAlerts( plant.alerts, AlertType.READINGS_OK) }}</td>
+                    <td>{{ countAlerts( plant.alerts, AlertType.MEDIUM_ALERT) }}</td>
+                    <td>{{ countAlerts( plant.alerts, AlertType.HIGH_ALERT) }}</td>
+                    <td><button class="btn btn-outline-secondary" (click)="openEditModal(plant)" data-bs-toggle="modal" data-bs-target="#editPlantModal">Editar</button>
+                    <button class="btn btn-danger" (click)="deletePlant(plant.id)" data-bs-toggle="modal" data-bs-target="#deletePlant">Eliminar</button>
+                    </td>
+                  </tr>
                 </tbody>
             </table>
         </div>
-
         <div class="cards row mt-3" style="margin: 0;">
-
-            <div class="card col-3 col-md-3" style=" height: 110px; width: 290px;">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                  <div>
-                    <h5 class="card-title" style="color: #9B99AC; font-size: 16px;">Temperatura</h5>
-                    <div class="d-flex align-items-center">
-                      <span><img src="assets/dashboard/check-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">100</span>
-                      <span><img src="assets/dashboard/alert-icon.png" alt="" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">20</span>
-                      <span><img src="assets/dashboard/alert-red-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style="font-size: 18px; margin-right: 12px;">3</span>
-                    </div>
-                  </div>
-                  <img src="assets/dashboard/temperature-Icon.png" alt="icono temp">
+          <div 
+            class="card col-3 col-md-3 mt-4" 
+            style="border-radius: 15px; background-color: #fff; height: 110px; width: 290px;" 
+            *ngFor="let card of cards"
+          >
+            <div class="card-body d-flex align-items-center justify-content-between">
+              <div>
+                <h5 class="card-title" style="color: #9B99AC; font-size: 16px;">{{ card.title }}</h5>
+                <div class="d-flex align-items-center">
+                  <ng-container *ngFor="let icon of card.alerticons; let i = index">
+                    <span><img [src]="icon.icon" alt="alert icon" style="width: 20px; margin-right: 10px;"></span>
+                    <span style="font-size: 18px; margin-right: 12px;" *ngIf="card.values[i]">{{ card.values[i] }}</span>
+                  </ng-container>
                 </div>
               </div>
-
-              <div class="card col-3 col-md-3" style="border-radius: 15px; background-color: #fff; height: 110px; width: 290px; ">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                  <div>
-                    <h5 class="card-title" style="color: #9B99AC; font-size: 16px;">Presión</h5>
-                    <div class="d-flex align-items-center">
-                      <span><img src="assets/dashboard/check-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">100</span>
-                      <span><img src="assets/dashboard/alert-icon.png" alt="" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">20</span>
-                      <span><img src="assets/dashboard/alert-red-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style="font-size: 18px; margin-right: 12px;">3</span>
-                    </div>
-                  </div>
-                  <img src="assets/dashboard/presion-icon.png" alt="icono temp">
-                </div>
-              </div>
-
-              <div class="card col-3 col-md-3" style="border-radius: 15px; background-color: #fff; height: 110px; width: 290px; ">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                  <div>
-                    <h5 class="card-title" style="color: #9B99AC; font-size: 16px;">Viento</h5>
-                    <div class="d-flex align-items-center">
-                      <span><img src="assets/dashboard/check-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">100</span>
-                      <span><img src="assets/dashboard/alert-icon.png" alt="" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">20</span>
-                      <span><img src="assets/dashboard/alert-red-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style="font-size: 18px; margin-right: 12px;">3</span>
-                    </div>
-                  </div>
-                  <img src="assets/dashboard/wind-icon.png" alt="icono temp">
-                </div>
-              </div>
-
-              <div class="card col-3 col-md-3" style="border-radius: 15px; background-color: #fff; height: 110px; width: 290px; ">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                  <div>
-                    <h5 class="card-title" style="color: #9B99AC; font-size: 16px;">Niveles</h5>
-                    <div class="d-flex align-items-center">
-                      <span><img src="assets/dashboard/check-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">100</span>
-                      <span><img src="assets/dashboard/alert-icon.png" alt="" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">20</span>
-                      <span><img src="assets/dashboard/alert-red-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style="font-size: 18px; margin-right: 12px;">3</span>
-                    </div>
-                  </div>
-                  <img src="assets/dashboard/levels-icon.png" alt="icono temp">
-                </div>
-              </div>
-
-              <div class="card col-3 col-md-3 mt-4" style="border-radius: 15px; background-color: #fff; height: 110px; width: 290px; ">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                  <div>
-                    <h5 class="card-title" style="color: #9B99AC; font-size: 16px;">Energía</h5>
-                    <div class="d-flex align-items-center">
-                      <span><img src="assets/dashboard/check-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">100</span>
-                      <span><img src="assets/dashboard/alert-icon.png" alt="" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">20</span>
-                      <span><img src="assets/dashboard/alert-red-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style="font-size: 18px; margin-right: 12px;">3</span>
-                    </div>
-                  </div>
-                  <img src="assets/dashboard/energy-icon.png" alt="icono temp">
-                </div>
-              </div>
-
-              <div class="card col-3 col-md-3 mt-4" style="border-radius: 15px; background-color: #fff; height: 110px; width: 290px; ">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                  <div>
-                    <h5 class="card-title" style="color: #9B99AC; font-size: 16px;">Tensión</h5>
-                    <div class="d-flex align-items-center">
-                      <span><img src="assets/dashboard/check-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">100</span>
-                      <span><img src="assets/dashboard/alert-icon.png" alt="" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">20</span>
-                      <span><img src="assets/dashboard/alert-red-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style="font-size: 18px; margin-right: 12px;">3</span>
-                    </div>
-                  </div>
-                  <img src="assets/dashboard/strain-icon.png" alt="icono temp">
-                </div>
-              </div>
-
-              <div class="card col-3 col-md-3 mt-4" style="border-radius: 15px; background-color: #fff; height: 110px; width: 290px; ">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                  <div>
-                    <h5 class="card-title" style="color: #9B99AC; font-size: 16px;">Monóxido de carbono</h5>
-                    <div class="d-flex align-items-center">
-                      <span><img src="assets/dashboard/check-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">100</span>
-                      <span><img src="assets/dashboard/alert-icon.png" alt="" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">20</span>
-                      <span><img src="assets/dashboard/alert-red-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style="font-size: 18px; margin-right: 12px;">3</span>
-                    </div>
-                  </div>
-                  <img src="assets/dashboard/monoxido-icon.png" alt="icono temp">
-                </div>
-              </div>
-
-              <div class="card col-3 col-md-3 mt-4" style="border-radius: 15px; background-color: #fff; height: 110px; width: 290px; ">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                  <div>
-                    <h5 class="card-title" style="color: #9B99AC; font-size: 16px;">Otros gases</h5>
-                    <div class="d-flex align-items-center">
-                      <span><img src="assets/dashboard/check-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">100</span>
-                      <span><img src="assets/dashboard/alert-icon.png" alt="" style="width: 20px; margin-right: 10px;"></span>
-                      <span style=" font-size: 18px; margin-right: 12px;">20</span>
-                      <span><img src="assets/dashboard/alert-red-icon.png" alt="check icon" style="width: 20px; margin-right: 10px;"></span>
-                      <span style="font-size: 18px; margin-right: 12px;">3</span>
-                    </div>
-                  </div>
-                  <img src="assets/dashboard/gases-icon.png" alt="icono temp">
-                </div>
-              </div>
-            
-
-
-    </div>
+              <img [src]="card.icon" alt="icono temp" />
+            </div>
+          </div>
+        </div>
+        
+        
   
   
 
 </div>
 
 <!------- Modal ------->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="createPlant" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content p-3">
         <div class="modal-header border-0">
@@ -265,27 +119,86 @@ text-decoration-skip-ink: none;
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form [formGroup]="plantForm">
             <div class="mb-3">
-              <label for="nombrePlanta" class="form-label" style="color: #33A3AA;">Nombre planta</label>
-              <input type="text" id="nombrePlanta" style="color: #33A3AA;"  class="form-control" placeholder="Ingrese nombre">
+              <label for="name" class="form-label" style="color: #33A3AA;">Nombre planta</label>
+              <input type="text" id="name" formControlName="name" style="color: #33A3AA;" class="form-control" placeholder="Ingrese nombre">
+              <div *ngIf="plantForm.get('name')?.invalid && plantForm.get('name')?.touched" class="text-danger">
+                El nombre es obligatorio y debe tener al menos 3 caracteres.
+              </div>
             </div>
+            
             <div class="mb-3">
-              <label for="paisPlanta" class="form-label" style="color: #33A3AA;">País</label>
-              <select id="paisPlanta" style="color: #33A3AA;" class="form-select">
-                <option selected disabled>Seleccione país</option>
-                <option value="1">México</option>
-                <option value="2">Argentina</option>
-                <option value="3">Colombia</option>
+              <label for="country" class="form-label" style="color: #33A3AA;">País</label>
+              <select id="country" formControlName="country" style="color: #33A3AA;" class="form-select">
+                <option value="" disabled selected>Seleccione país</option>
+                <option *ngFor="let country of countries" [value]="country.name.shortname">{{ country.name.shortname }}</option>
               </select>
+              <div *ngIf="plantForm.get('country')?.invalid && plantForm.get('country')?.touched" class="text-danger">
+                Seleccione un país.
+              </div>
             </div>
+            
           </form>
         </div>
         <div class="modal-footer border-0 justify-content-center">
           <button type="button" class="btn btn-outline-secondary px-4">Cancelar</button>
-          <button type="button" class="btn  px-4" style="background-color: #33A3AA; color: #fff;">Crear</button>
+          <button type="button" (click)="createPlant()" class="btn  px-4" style="background-color: #33A3AA; color: #fff;">Crear</button>
         </div>
       </div>
     </div>
   </div>
   
+<!-- edit modal -->
+<div class="modal fade" id="editPlantModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editPlantModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg"> 
+    <div class="modal-content p-3">
+      <div class="modal-header border-0">
+        <h1 class="modal-title fs-5 fw-bold" id="editPlantModalLabel">Editar planta</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editPlantForm">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="editName" class="form-label" style="color: #33A3AA;">Nombre planta</label>
+              <input type="text" id="editName" formControlName="name" style="color: #33A3AA;" class="form-control" [value]="selectedPlant?.name" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="editCountry" class="form-label" style="color: #33A3AA;">País</label>
+              <input type="text" id="editCountry" style="color: #33A3AA;" class="form-control" [value]="selectedPlant?.country" readonly>
+            </div>
+          </div>
+        
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="editMediumAlerts" class="form-label" style="color: #33A3AA;">Alertas medias</label>
+              <input type="number" id="editMediumAlerts" formControlName="mediumAlerts" style="color: #33A3AA;" class="form-control" min="0">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="editHighAlerts" class="form-label" style="color: #33A3AA;">Alertas altas</label>
+              <input type="number" id="editHighAlerts" formControlName="highAlerts" style="color: #33A3AA;" class="form-control" min="0">
+            </div>
+          </div>
+        
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="editReadings" class="form-label" style="color: #33A3AA;">Cantidad de lecturas</label>
+              <input type="number" id="editReadings" formControlName="readings" style="color: #33A3AA;" class="form-control" min="0">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="editSensorsDisabled" class="form-label" style="color: #33A3AA;">Sensores deshabilitados</label>
+              <input type="number" id="editSensorsDisabled" formControlName="sensorsDisabled" style="color: #33A3AA;" class="form-control" min="0">
+            </div>
+          </div>
+        </form>
+        
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn px-4" style="background-color: #33A3AA; color: #fff;" (click)="updatePlant()">Editar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

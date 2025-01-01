@@ -1,0 +1,6 @@
+export enum AlertType {
+    MEDIUM_ALERT = 'MEDIUM_ALERT',
+    HIGH_ALERT = 'HIGH_ALERT',
+    SENSORS_DISABLED = 'SENSORS_DISABLED',
+    READINGS_OK = 'READINGS_OK',
+  }

@@ -175,3 +175,13 @@
     
 }
 
+.txt-route {
+    cursor: pointer; 
+    color: #007bff; 
+    text-decoration: none; 
+  }
+  
+  .txt-route:hover {
+    text-decoration: underline; 
+  }
+
