@@ -163,7 +163,31 @@
 .modal-content {
     border-radius: 10px; 
   }
-  
- 
 
+
+
+  @media (max-width: 768px) {
+    .cards {
+      flex-direction: column;
+    }
+  
+    .card {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+  
+    .table-responsive {
+      width: 100%;
+    }
+  
+    .sidebar {
+      display: none;
+    }
+  
+    .body {
+      margin-left: 0;
+      padding: 20px;
+    }
+  }
   

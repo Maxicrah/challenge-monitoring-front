@@ -3,7 +3,6 @@
 }
 
 .sign-in {
-    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 48px;
     line-height: 58px;
@@ -17,7 +16,6 @@
 }
 
 .monitoreo {
-    font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: 500;
     line-height: 21px;
@@ -27,7 +25,6 @@
 }
 
 .administra {
-    font-family: 'Poppins', sans-serif;
 
     font-size: 12px;
     font-weight: 400;
@@ -39,7 +36,6 @@
 
 .text-sign-in {
 
-    font-family: 'Poppins', sans-serif;
     font-size: 14px;
     font-weight: 400px;
     line-height: 24px;
@@ -103,7 +99,6 @@
 }
 
 .iniciar-sesion {
-    font-family: 'Poppins', sans-serif;
     font-size: 25px;
     font-weight: 500;
     line-height: 48px;
@@ -121,7 +116,6 @@
 .form-group {
     position: relative;
     margin-bottom: 50px;
-    font-family: 'Poppins', sans-serif;
 }
 .eyeicon{
     position: absolute;
@@ -138,7 +132,6 @@
     padding: 10px;
     border: 1px solid #DCDBDD;
     border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
     font-size: 14px;
 }
 
@@ -153,7 +146,6 @@
     border: none;
     border-radius: 8px;
     color: white;
-    font-family: 'Poppins', sans-serif;
     font-size: 14px;
     cursor: pointer;
 }
@@ -165,7 +157,6 @@
 }
 
 .text-captcha{
-    font-family: 'Poppins', sans-serif;
     font-size: 12px;
     font-weight: 400;
     line-height: 17px;
@@ -184,4 +175,70 @@
   .txt-route:hover {
     text-decoration: underline; 
   }
+@media (max-width: 768px) {
+    .title-monitoreo, .txt-password {
+        display: none;
+    }
+    
+   
 
+    .part-2 {
+    
+        width: 100%;
+        height: auto;
+        left: 0;
+        border-radius: 0;
+        padding: 20px;
+    }
+
+    .container-fluid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sign-in {
+        font-size: 32px;
+        line-height: 40px;
+        top: 150px;
+        left: 20px;
+        width: auto;
+    }
+
+    .text-sign-in {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .monitoreo,
+    .administra {
+        font-size: 10px;
+        line-height: 15px;
+    }
+
+    .form-container {
+        width: 100%;
+    }
+
+    .form-floating,
+    .form-password {
+        width: 100%;
+    }
+
+    .btn-primary {
+        width: 100%;
+        height: 45px;
+    }
+
+    .txt-password {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .eyeicon {
+        right: 15px;
+    }
+
+    .text-captcha {
+        font-size: 10px;
+    }
+}
