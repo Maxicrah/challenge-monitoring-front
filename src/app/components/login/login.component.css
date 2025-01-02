@@ -117,13 +117,15 @@
     position: relative;
     margin-bottom: 50px;
 }
-.eyeicon{
+
+.eyeicon {
     position: absolute;
     top: 25%;
     right: 10px;
     cursor: pointer;
 }
-.form-password{
+
+.form-password {
     position: relative;
 }
 
@@ -135,9 +137,10 @@
     font-size: 14px;
 }
 
-.txt-password{
+.txt-password {
     width: 50%;
 }
+
 .btn-primary {
     width: 40%;
     height: 50px;
@@ -149,41 +152,44 @@
     font-size: 14px;
     cursor: pointer;
 }
-.form-floating{
-    height: 58px;
-}
+
+
+
 .btn-primary:hover {
     background-color: #107076;
 }
 
-.text-captcha{
+.text-captcha {
     font-size: 12px;
     font-weight: 400;
     line-height: 17px;
     text-align: left;
     text-decoration-skip-ink: none;
     color: #84818A;
-    
+
 }
 
 .txt-route {
-    cursor: pointer; 
-    color: #007bff; 
-    text-decoration: none; 
-  }
-  
-  .txt-route:hover {
-    text-decoration: underline; 
-  }
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.txt-route:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 768px) {
-    .title-monitoreo, .txt-password {
+
+    .title-monitoreo,
+    .txt-password {
         display: none;
     }
-    
-   
+
+
 
     .part-2 {
-    
+
         width: 100%;
         height: auto;
         left: 0;
@@ -219,7 +225,7 @@
         width: 100%;
     }
 
-    .form-floating,
+    
     .form-password {
         width: 100%;
     }

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Plant } from '../../models/plant';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 import { LoginService } from '../auth/login.service';
 import { Alert } from '../../models/alert';
 
